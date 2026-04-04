@@ -11,7 +11,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>eureka_server</artifactId>
+    <artifactId>eureka-server</artifactId>
 
     <dependencies>
         <dependency>
