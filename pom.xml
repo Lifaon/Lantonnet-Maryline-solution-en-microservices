@@ -18,7 +18,7 @@
 
     <modules>
         <module>config_server</module>
-<!--        <module>eureka_server</module>-->
+        <module>eureka_server</module>
 <!--        <module>gateway</module>-->
 <!--        <module>patient/patient_api</module>-->
 <!--        <module>patient/patient_impl</module>-->
