@@ -22,7 +22,7 @@
         <module>gateway</module>
         <module>patient/api</module>
         <module>patient/microservice</module>
-<!--        <module>client_ui</module>-->
+        <module>client-ui</module>
     </modules>
 
     <properties>

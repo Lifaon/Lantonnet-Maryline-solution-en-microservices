@@ -10,21 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping("/patients")
 public interface PatientApi {
 
-	@PostMapping
+	@PostMapping("/patients")
 	void create(@RequestBody PatientDTO patient);
 
-	@GetMapping
+	@GetMapping("/patients")
 	List<PatientDTO> getAll();
 
-	@GetMapping("/{id}")
+	@GetMapping("/patients/{id}")
 	PatientDTO get(@PathVariable Integer id);
 
-	@PutMapping
+	@PutMapping("/patients")
 	void update(@RequestBody PatientDTO patient);
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/patients/{id}")
 	void delete(@PathVariable Integer id);
 }
