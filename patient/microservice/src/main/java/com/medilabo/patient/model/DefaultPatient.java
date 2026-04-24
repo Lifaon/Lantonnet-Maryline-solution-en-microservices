@@ -35,6 +35,15 @@ public class DefaultPatient implements Patient {
 	private String address;
 	private String phoneNumber;
 
+	public DefaultPatient(String firstName, String lastName, LocalDate dateOfBirth, Gender gender, String address, String phoneNumber) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+	}
+
 	public DefaultPatient(Patient p) {
 		this(p.getId(), p.getFirstName(), p.getLastName(), p.getDateOfBirth(), p.getGender(), p.getAddress(), p.getPhoneNumber());
 	}
