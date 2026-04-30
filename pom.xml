@@ -19,9 +19,14 @@
     <modules>
         <module>config-server</module>
         <module>eureka-server</module>
-        <module>gateway</module>
+
         <module>patient/api</module>
         <module>patient/microservice</module>
+
+        <module>note/api</module>
+        <module>note/microservice</module>
+
+        <module>gateway</module>
         <module>client-ui</module>
     </modules>
 
@@ -36,6 +41,12 @@
             <dependency>
                 <groupId>com.medilabo</groupId>
                 <artifactId>patient-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.medilabo</groupId>
+                <artifactId>note-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
