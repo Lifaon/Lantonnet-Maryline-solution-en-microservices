@@ -26,6 +26,9 @@
         <module>note/api</module>
         <module>note/microservice</module>
 
+        <module>risk/api</module>
+        <module>risk/microservice</module>
+
         <module>gateway</module>
         <module>client-ui</module>
     </modules>
@@ -43,10 +46,14 @@
                 <artifactId>patient-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.medilabo</groupId>
                 <artifactId>note-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.medilabo</groupId>
+                <artifactId>risk-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
