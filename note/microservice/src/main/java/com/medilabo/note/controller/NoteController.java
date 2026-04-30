@@ -30,6 +30,13 @@ public class NoteController implements NoteApi {
 	}
 
 	@Override
+	public List<String> getPatientData(Integer id) {
+		return repo.findAllByPatientId(id).stream()
+				.map(DefaultNote::getData)
+				.toList();
+	}
+
+	@Override
 	public NoteDTO get(String id) {
 		return new NoteDTO(repo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
 	}

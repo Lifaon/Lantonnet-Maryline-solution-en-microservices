@@ -16,6 +16,9 @@ public interface NoteApi {
 	@GetMapping("/notes")
 	List<NoteDTO> getAll();
 
+	@GetMapping("/notes/patient/{id}")
+	List<String> getPatientData(@PathVariable Integer id);
+
 	@GetMapping("/notes/{id}")
 	NoteDTO get(@PathVariable String id);
 

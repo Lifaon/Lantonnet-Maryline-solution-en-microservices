@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="|${patient.firstName} ${patient.lastName}|">Patient</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+
+<a class="back" th:href="@{/}">← Retour à la liste</a>
+
+<div class="card">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:1rem;">
+        <div th:class="|avatar avatar-${patient.gender}|"
+             th:text="${#strings.substring(patient.firstName,0,1) + #strings.substring(patient.lastName,0,1)}"></div>
+        <div>
+            <h2 th:text="|${patient.lastName} ${patient.firstName}|"></h2>
+            <p class="sub" th:text="|Patient · ID ${patient.id}|"></p>
+        </div>
+    </div>
+    <hr>
+    <div class="field-grid">
+        <div class="field">
+            <label>Date de naissance</label>
+            <span th:text="${patient.dateOfBirth}"></span>
+        </div>
+        <div class="field">
+            <label>Genre</label>
+            <span th:class="|badge badge-${patient.gender}|" th:text="${patient.gender}"></span>
+        </div>
+        <div class="field">
+            <label>Adresse</label>
+            <span th:text="${patient.address}"></span>
+        </div>
+        <div class="field">
+            <label>Téléphone</label>
+            <span th:text="${patient.phoneNumber}"></span>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Notes</h3>
+    <div th:each="note : ${notes}" class="note">
+        <div class="note-dot"></div>
+        <span class="note-text" th:text="${note}"></span>
+    </div>
+</div>
+
+</body>
+</html>
