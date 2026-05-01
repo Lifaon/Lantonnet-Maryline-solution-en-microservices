@@ -40,6 +40,14 @@
 </div>
 
 <div class="card">
+    <h3>Évaluation des risques</h3>
+    <div th:class="|risk-pill risk-${risk}|">
+        <span class="risk-dot"></span>
+        <span th:text="${risk.toFrench()}"></span>
+    </div>
+</div>
+
+<div class="card">
     <h3>Notes</h3>
     <div th:each="note : ${notes}" class="note">
         <div class="note-dot"></div>
