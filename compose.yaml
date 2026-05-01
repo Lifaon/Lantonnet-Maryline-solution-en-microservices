@@ -1,0 +1,34 @@
+name: medilabo
+
+include:
+  - patient/microservice/docker/compose.yaml
+#  - note/microservice/docker/compose.yaml
+
+services:
+  config-server:
+    image: 'medilabo/config-server:latest'
+    ports:
+      - '9101:9101'
+
+  eureka-server:
+    image: 'medilabo/eureka-server:latest'
+    ports:
+      - '9102:9102'
+
+  patient-microservice:
+    image: 'medilabo/patient-microservice:latest'
+    ports:
+      - '9002:9002'
+    depends_on:
+      config-server:
+        condition: service_started
+      eureka-server:
+        condition: service_started
+      mysql:
+        condition: service_healthy
+    env_file:
+      - patient/microservice/docker/.env
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://host.docker.internal:9101/
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://host.docker.internal:9102/eureka/
+      - MYSQL_HOST=mysql
