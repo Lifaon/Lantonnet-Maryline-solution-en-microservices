@@ -2,33 +2,123 @@ name: medilabo
 
 include:
   - patient/microservice/docker/compose.yaml
-#  - note/microservice/docker/compose.yaml
+  - note/microservice/docker/compose.yaml
+
 
 services:
   config-server:
     image: 'medilabo/config-server:latest'
-    ports:
-      - '9101:9101'
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
 
   eureka-server:
     image: 'medilabo/eureka-server:latest'
-    ports:
-      - '9102:9102'
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
 
   patient-microservice:
     image: 'medilabo/patient-microservice:latest'
-    ports:
-      - '9002:9002'
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
     depends_on:
       config-server:
-        condition: service_started
+        condition: service_healthy
       eureka-server:
-        condition: service_started
+        condition: service_healthy
       mysql:
         condition: service_healthy
     env_file:
       - patient/microservice/docker/.env
     environment:
-      - SPRING_CLOUD_CONFIG_URI=http://host.docker.internal:9101/
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://host.docker.internal:9102/eureka/
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8080/
       - MYSQL_HOST=mysql
+
+
+  note-microservice:
+    image: 'medilabo/note-microservice:latest'
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8080/
+      - APP_MONGODB_HOST=mongodb
+
+
+  risk-microservice:
+    image: 'medilabo/risk-microservice:latest'
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8080/
+
+
+  gateway:
+    image: 'medilabo/gateway:latest'
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    depends_on:
+      patient-microservice:
+        condition: service_healthy
+      note-microservice:
+        condition: service_healthy
+      risk-microservice:
+        condition: service_healthy
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8080/
+
+
+  client-ui:
+    image: 'medilabo/client-ui:latest'
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8080/
+      - GATEWAY_URL=http://gateway:8080
+    ports:
+      - '8080:8080'
