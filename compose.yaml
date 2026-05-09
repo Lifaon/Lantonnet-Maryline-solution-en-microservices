@@ -44,8 +44,8 @@ services:
     env_file:
       - patient/microservice/docker/.env
     environment:
-      - SPRING_CLOUD_CONFIG_URI=http://config-server:8080/
-      - MYSQL_HOST=mysql
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8080/
+      MYSQL_HOST: mysql
 
 
   note-microservice:
@@ -63,9 +63,11 @@ services:
         condition: service_healthy
       mongodb:
         condition: service_healthy
+    env_file:
+      - note/microservice/docker/.env
     environment:
-      - SPRING_CLOUD_CONFIG_URI=http://config-server:8080/
-      - APP_MONGODB_HOST=mongodb
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8080/
+      MONGO_HOST: mongodb
 
 
   risk-microservice:
@@ -82,7 +84,7 @@ services:
       eureka-server:
         condition: service_healthy
     environment:
-      - SPRING_CLOUD_CONFIG_URI=http://config-server:8080/
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8080/
 
 
   gateway:
@@ -101,7 +103,7 @@ services:
       risk-microservice:
         condition: service_healthy
     environment:
-      - SPRING_CLOUD_CONFIG_URI=http://config-server:8080/
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8080/
 
 
   client-ui:
@@ -118,7 +120,6 @@ services:
       eureka-server:
         condition: service_healthy
     environment:
-      - SPRING_CLOUD_CONFIG_URI=http://config-server:8080/
-      - GATEWAY_URL=http://gateway:8080
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8080/
     ports:
       - '8080:8080'
