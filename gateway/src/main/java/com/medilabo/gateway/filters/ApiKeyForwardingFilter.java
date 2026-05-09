@@ -1,4 +1,4 @@
-package com.medilabo.gateway.config;
+package com.medilabo.gateway.filters;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+<div class="page">
+    <div class="card">
+        <h1>Connexion</h1>
+        <form th:action="@{/login}" th:object="${loginForm}" method="post">
+            <div class="field">
+                <label for="username">Identifiant</label>
+                <input th:field="*{username}" type="text" id="username" name="username" placeholder="Votre identifiant" />
+            </div>
+            <div class="field">
+                <label for="password">Mot de passe</label>
+                <input th:field="*{password}" type="password" id="password" name="password" placeholder="••••••••" />
+            </div>
+            <button type="submit" class="btn">Se connecter</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
